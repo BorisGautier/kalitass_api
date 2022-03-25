@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer("idPatient");
             $table->integer("idMedecin");
             $table->integer("idPharmacien");
-            $table->string("signature");
+            $table->string("signature")->nullable();
+            $table->boolean("validite")->default(true);
             $table->timestamps();
         });
     }

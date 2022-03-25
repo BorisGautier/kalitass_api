@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 /**
  * App\Models\Medicament
  *
@@ -12,9 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $denomination
  * @property string $prix
  * @property string $posologie
- * @property string $description
+ * @property string $modaliteAdmin
  * @property string $dureeTraitement
- * @property bool $validite
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Prescription[] $prescriptions
@@ -24,13 +24,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Medicament query()
  * @method static \Illuminate\Database\Eloquent\Builder|Medicament whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Medicament whereDenomination($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Medicament whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Medicament whereDureeTraitement($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Medicament whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Medicament whereModaliteAdmin($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Medicament wherePosologie($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Medicament wherePrix($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Medicament whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Medicament whereValidite($value)
  * @mixin \Eloquent
  */
 class Medicament extends Model
@@ -45,7 +44,7 @@ class Medicament extends Model
     protected $fillable = [
         'denomination',
         'prix',
-        'posologie', 'description', 'dureeTraitement', 'validite'
+        'posologie', 'dureeTraitement', 'modaliteAdmin'
     ];
 
     public function prescriptions()

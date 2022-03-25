@@ -34,9 +34,8 @@ class MedicamentController extends BaseController
             'denomination' => 'required',
             'prix' => 'required',
             'posologie' => 'required',
-            'description' => 'required',
+            'modaliteAdmin' => 'required',
             'dureeTraitement' => 'required',
-            'validite' => 'required'
         ]);
 
         if ($validator->fails()) {

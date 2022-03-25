@@ -76,7 +76,8 @@ class PrescriptionController extends BaseController
             'idMedecin' => 'required',
             'idPatient' => 'required',
             'idPharmacien' => 'required',
-            'idMedicaments' => 'required',
+            'medicaments' => 'required',
+            'validite' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -91,18 +92,27 @@ class PrescriptionController extends BaseController
 
         $input['idPatient'] = $request->idPatient;
         $input['idPharmacien'] = $request->idPharmacien;
-        $input['idMedecin'] = $request->medecin;
+        $input['idMedecin'] = $request->idMedecin;
+        $input['validite'] = $request->validite;
 
         try {
 
             DB::beginTransaction();
             $prescription = Prescription::create($input);
 
-            if ($request->idMedicaments != null) {
-                $idMedicaments = explode(",", $request->idMedicaments);
-                $medicaments = Medicament::find($idMedicaments);
-                $prescription->medicaments()->attach($medicaments);
+
+
+            if ($request->medicaments != null) {
+                Medicament::insert($request->medicaments);
+
+                $medicaments = Medicament::all();
+                foreach ($medicaments as $medicament) {
+                    $med = Medicament::find($medicament->id);
+                    $prescription->medicaments()->attach($med);
+                }
             }
+
+            $prescription->medicaments;
 
             DB::commit();
 

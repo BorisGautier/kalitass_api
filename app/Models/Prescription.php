@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 /**
  * App\Models\Prescription
  *
@@ -28,6 +29,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Prescription whereSignature($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Prescription whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property bool $validite
+ * @method static \Illuminate\Database\Eloquent\Builder|Prescription whereValidite($value)
  */
 class Prescription extends Model
 {
@@ -41,7 +44,7 @@ class Prescription extends Model
     protected $fillable = [
         'idMedecin',
         'idPatient',
-        'idPharmacien', 'signature',
+        'idPharmacien', 'signature', 'validite'
     ];
 
     public function medicaments()

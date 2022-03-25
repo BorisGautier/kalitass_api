@@ -18,9 +18,8 @@ return new class extends Migration
             $table->string("denomination");
             $table->string("prix");
             $table->string("posologie");
-            $table->string("description");
+            $table->string("modaliteAdmin");
             $table->string("dureeTraitement");
-            $table->boolean("validite")->default(true);
             $table->timestamps();
         });
     }
