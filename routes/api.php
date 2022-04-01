@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MonitoringFormController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,8 @@ Route::apiResource('geolocalisation', App\Http\Controllers\Api\GeolocalisationCo
 Route::get('prescription/patient/{id}', [App\Http\Controllers\Api\PrescriptionController::class, 'prescriptionByPatient']);
 Route::get('prescription/medecin/{id}', [App\Http\Controllers\Api\PrescriptionController::class, 'prescriptionByMedecin']);
 Route::get('prescription/pharmacien/{id}', [App\Http\Controllers\Api\PrescriptionController::class, 'prescriptionByPharmacien']);
+
+Route::group(['prefix'=>'monitoring'], function(){
+    Route::post('update', [MonitoringFormController::class, 'updateParam']);
+    Route::get('/{user_id}', [MonitoringFormController::class, 'getParamById']);
+});
