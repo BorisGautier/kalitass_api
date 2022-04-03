@@ -33,9 +33,10 @@ class MedicamentController extends BaseController
         $validator =  Validator::make($request->all(), [
             'denomination' => 'required',
             'prix' => 'required',
-            'posologie' => 'required',
-            'modaliteAdmin' => 'required',
+            'horaire' => 'required',
+            'descriptifHoraire' => 'required',
             'dureeTraitement' => 'required',
+            'descriptifTraitement' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -88,10 +89,11 @@ class MedicamentController extends BaseController
 
             $medicament->denomination = $request->denomination ?? $medicament->denomination;
             $medicament->prix = $request->prix ?? $medicament->prix;
-            $medicament->posologie = $request->posologie ?? $medicament->posologie;
-            $medicament->description = $request->description ?? $medicament->description;
+            $medicament->horaire = $request->horaire ?? $medicament->horaire;
+            $medicament->descriptifHoraire = $request->descriptifHoraire ?? $medicament->descriptifHoraire;
             $medicament->dureeTraitement = $request->dureeTraitement ?? $medicament->dureeTraitement;
-            $medicament->validite = $request->validite ?? $medicament->validite;
+            $medicament->descriptifTraitement = $request->descriptifTraitement ?? $medicament->descriptifTraitement;
+
 
             $medicament->save();
 

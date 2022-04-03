@@ -44,7 +44,7 @@ class Medicament extends Model
     protected $fillable = [
         'denomination',
         'prix',
-        'posologie', 'dureeTraitement', 'modaliteAdmin'
+        'horaire', 'descriptifHoraire', 'dureeTraitement', 'descriptifTraitement'
     ];
 
     public function prescriptions()

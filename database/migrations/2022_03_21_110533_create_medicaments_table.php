@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string("denomination");
             $table->string("prix");
-            $table->string("posologie");
-            $table->string("modaliteAdmin");
+            $table->string("horaire");
+            $table->string("descriptifHoraire");
             $table->string("dureeTraitement");
+            $table->string("descriptifTraitement");
             $table->timestamps();
         });
     }
