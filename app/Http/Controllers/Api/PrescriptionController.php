@@ -75,7 +75,6 @@ class PrescriptionController extends BaseController
         $validator =  Validator::make($request->all(), [
             'idMedecin' => 'required',
             'idPatient' => 'required',
-            'idPharmacien' => 'required',
             'medicaments' => 'required',
             'validite' => 'required'
         ]);
@@ -140,15 +139,33 @@ class PrescriptionController extends BaseController
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update prescription by id
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Prescription  $prescription
-     * @return \Illuminate\Http\Response
+     *
+     *
      */
-    public function update(Request $request, Prescription $prescription)
+    public function update(Request $request, $id)
     {
-        //
+        $prescription = Prescription::find($id);
+
+        try {
+            DB::beginTransaction();
+
+            $prescription->idMedecin = $request->idMedecin ?? $prescription->idMedecin;
+            $prescription->idPatient = $request->idPatient ?? $prescription->idPatient;
+            $prescription->idPharmacien = $request->idPharmacien ?? $prescription->idPharmacien;
+            $prescription->validite = $request->validite ?? $prescription->validite;
+
+
+            $prescription->save();
+
+            DB::commit();
+
+            return $this->sendResponse($prescription, "Update Success", 201);
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return $this->sendError('Erreur.', ['error' => $ex->getMessage()], 400);
+        }
     }
 
     /**
@@ -157,8 +174,21 @@ class PrescriptionController extends BaseController
      * @param  \App\Models\Prescription  $prescription
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Prescription $prescription)
+    public function destroy($id)
     {
-        //
+        $prescription = Prescription::find($id);
+
+        try {
+            DB::beginTransaction();
+
+            $prescription->delete();
+
+            DB::commit();
+
+            return $this->sendResponse($prescription, "Suppression reussie", 201);
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return $this->sendError('Erreur.', ['error' => $ex->getMessage()], 400);
+        }
     }
 }
