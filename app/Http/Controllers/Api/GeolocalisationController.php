@@ -48,11 +48,33 @@ class GeolocalisationController extends BaseController
         try {
 
             DB::beginTransaction();
-            $geolocalisation = Geolocalisation::create($input);
+            $user = Geolocalisation::where('idUser', $request->idUser)->first();
 
-            DB::commit();
+            if ($user) {
 
-            return $this->sendResponse($geolocalisation, "Création de la geolocalisation reussie", 201);
+                $user->idUser = $request->idUser ?? $user->idUser;
+                $user->roleUser = $request->roleUser ?? $user->roleUser;
+                $user->nom = $request->nom ?? $user->nom;
+                $user->pays = $request->pays ?? $user->pays;
+                $user->adresse = $request->adresse ?? $user->adresse;
+                $user->longitude = $request->longitude ?? $user->longitude;
+                $user->latitude = $request->latitude ?? $user->latitude;
+
+
+
+                $user->save();
+
+                DB::commit();
+
+                return $this->sendResponse($user, "Update Success", 201);
+            } else {
+
+                $geolocalisation = Geolocalisation::create($input);
+
+                DB::commit();
+
+                return $this->sendResponse($geolocalisation, "Création de la geolocalisation reussie", 201);
+            }
         } catch (\Exception $ex) {
             DB::rollBack();
             return $this->sendError('Erreur.', ['error' => $ex->getMessage()], 400);
@@ -65,9 +87,9 @@ class GeolocalisationController extends BaseController
      * @param  \App\Models\Geolocalisation  $geolocalisation
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($idUser)
     {
-        $geolocalisation = Geolocalisation::find($id);
+        $geolocalisation = Geolocalisation::where('idUser', $idUser)->first();
 
         return $this->sendResponse($geolocalisation, 'Geolocalisation');
     }
