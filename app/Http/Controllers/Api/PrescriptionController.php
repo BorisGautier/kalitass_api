@@ -83,10 +83,21 @@ class PrescriptionController extends BaseController
             return $this->sendError('Erreur de paramètres.', $validator->errors(), 400);
         }
 
-        if ($request->file()) {
-            $fileName = time() . '_' . $request->signature->getClientOriginalName();
-            $filePath = $request->file('signature')->storeAs('uploads/signature' . $request->idMedecin, $fileName, 'public');
-            $input['signature'] = '/storage/' . $filePath;
+        if ($request->signature!='') {
+
+            $img = $request->signature;
+            $folderPath = 'public/storage/uploads/';
+
+            $image_parts = explode(';base64,',$img);
+            $image_type_aux = explode('image/',$image_parts[0]);
+            $image_type = $image_type_aux[1];
+
+            $image_base64 = base64_decode($image_parts[1]);
+            $fileName = uniqid() .'-'. time().'.' .$image_type;
+            $file = $folderPath.$fileName;
+         //   $filePath = $request->file('signature')->storeAs('uploads/signature' . $request->idMedecin, $fileName, 'public');
+            file_put_contents($file, $image_base64);
+            $input['signature'] = $file;
         }
 
         $input['idPatient'] = $request->idPatient;
