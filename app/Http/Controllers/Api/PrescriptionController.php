@@ -86,7 +86,8 @@ class PrescriptionController extends BaseController
         if ($request->signature!='') {
 
             $img = $request->signature;
-            $folderPath = 'public/storage/uploads/';
+
+            $folderPath = public_path('storage/uploads/');
 
             $image_parts = explode(';base64,',$img);
             $image_type_aux = explode('image/',$image_parts[0]);
