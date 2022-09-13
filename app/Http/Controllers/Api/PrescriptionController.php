@@ -18,7 +18,7 @@ class PrescriptionController extends BaseController
     public function index()
     {
 
-        $prescriptions = Prescription::all();
+        $prescriptions = Prescription::orderBy('id', 'desc')->get();
 
         foreach ($prescriptions as $prescription) {
             $prescription->medicaments;
@@ -30,7 +30,7 @@ class PrescriptionController extends BaseController
     public function prescriptionByPatient($idPatient)
     {
 
-        $prescriptions = Prescription::where('idPatient', $idPatient)->get();
+        $prescriptions = Prescription::where('idPatient', $idPatient)->orderBy('id', 'desc')->get();
 
         foreach ($prescriptions as $prescription) {
             $prescription->medicaments;
@@ -98,7 +98,7 @@ class PrescriptionController extends BaseController
             $file = $folderPath.$fileName;
          //   $filePath = $request->file('signature')->storeAs('uploads/signature' . $request->idMedecin, $fileName, 'public');
             file_put_contents($file, $image_base64);
-            $input['signature'] = $file;
+            $input['signature'] = $fileName;
         }
 
         $input['idPatient'] = $request->idPatient;
@@ -114,9 +114,12 @@ class PrescriptionController extends BaseController
 
 
             if ($request->medicaments != null) {
+
+                $nbMed = sizeof($request->medicaments);
                 Medicament::insert($request->medicaments);
 
-                $medicaments = Medicament::all();
+                $medicaments = Medicament::orderBy('id', 'desc')->take($nbMed)->get();
+
                 foreach ($medicaments as $medicament) {
                     $med = Medicament::find($medicament->id);
                     $prescription->medicaments()->attach($med);
