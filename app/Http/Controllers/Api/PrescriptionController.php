@@ -18,7 +18,7 @@ class PrescriptionController extends BaseController
     public function index()
     {
 
-        $prescriptions = Prescription::orderBy('id', 'desc')->get();
+        $prescriptions = Prescription::orderBy('id', 'desc')->where('validite',true)->get();
 
         foreach ($prescriptions as $prescription) {
             $prescription->medicaments;
@@ -30,7 +30,7 @@ class PrescriptionController extends BaseController
     public function prescriptionByPatient($idPatient)
     {
 
-        $prescriptions = Prescription::where('idPatient', $idPatient)->orderBy('id', 'desc')->get();
+        $prescriptions = Prescription::where('idPatient', $idPatient)->where('validite',true)->orderBy('id', 'desc')->get();
 
         foreach ($prescriptions as $prescription) {
             $prescription->medicaments;
@@ -42,7 +42,7 @@ class PrescriptionController extends BaseController
     public function prescriptionByPharmacien($idPharmacien)
     {
 
-        $prescriptions = Prescription::where('idPharmacien', $idPharmacien)->get();
+        $prescriptions = Prescription::where('idPharmacien', $idPharmacien)->where('validite',true)->orderBy('id', 'desc')->get();
 
         foreach ($prescriptions as $prescription) {
             $prescription->medicaments;
@@ -55,7 +55,7 @@ class PrescriptionController extends BaseController
     public function prescriptionByMedecin($idMedecin)
     {
 
-        $prescriptions = Prescription::where('idMedecin', $idMedecin)->get();
+        $prescriptions = Prescription::where('idMedecin', $idMedecin)->where('validite',true)->orderBy('id', 'desc')->get();
 
         foreach ($prescriptions as $prescription) {
             $prescription->medicaments;
